@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 const YourComponent = () => {
   const [data, setData] = useState([]);
   const [newProduct, setNewProduct] = useState({
+    id: '',
     name: '',
     descripcion: '',
     precio: '',
@@ -27,26 +28,14 @@ const YourComponent = () => {
     }
   };
 
-  const handleDelete = async (index) => {
-    try {
-      const response = await fetch(`/api/hello?index=${index}`, {
-        method: 'DELETE'
-      });
-
-      if (response.ok) {
-        const updatedData = data.filter((_, i) => i !== index);
-        setData(updatedData);
-      } else {
-        throw new Error('Error al eliminar los datos');
-      }
-    } catch (error) {
-      console.error('Hubo un error:', error);
-    }
+  const handleDelete = (id) => {
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
   };
 
-  const handleImageChange = (index, event) => {
-    const updatedData = data.map((item, i) => {
-      if (i === index) {
+  const handleImageChange = (id, event) => {
+    const updatedData = data.map((item) => {
+      if (item.id === id) {
         return {
           ...item,
           foto: URL.createObjectURL(event.target.files[0])
@@ -67,8 +56,15 @@ const YourComponent = () => {
   };
 
   const handleAddProduct = () => {
-    setData([...data, newProduct]);
+    const id = `product_${Date.now()}`;
+    const updatedProduct = {
+      ...newProduct,
+      id
+    };
+
+    setData([...data, updatedProduct]);
     setNewProduct({
+      id: '',
       name: '',
       descripcion: '',
       precio: '',
@@ -118,6 +114,7 @@ const YourComponent = () => {
       <table className="min-w-full mb-4">
         <thead>
           <tr className="bg-gray-200 text-gray-600">
+            <th className="py-2 px-4">ID</th> 
             <th className="py-2 px-4">Nombre</th>
             <th className="py-2 px-4">Descripción</th>
             <th className="py-2 px-4">Precio</th>
@@ -126,8 +123,9 @@ const YourComponent = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((product, index) => (
-            <tr key={index} className="border-b border-gray-200">
+          {data.map((product) => (
+            <tr key={product.id} className="border-b border-gray-200">
+              <td>{product.id}</td>
               <td className="py-2 px-4">{product.name}</td>
               <td className="py-2 px-4">{product.descripcion}</td>
               <td className="py-2 px-4">{product.precio}</td>
@@ -136,8 +134,13 @@ const YourComponent = () => {
               </td>
               <td className="py-2 px-4">
                 <div className="flex items-center justify-end">
-                  <input type="file" onChange={(event) => handleImageChange(index, event)} />
-                  <button className="bg-red-500 text-white py-1 px-3 ml-2" onClick={() => handleDelete(index)}>Eliminar</button>
+                  <input type="file" onChange={(event) => handleImageChange(product.id, event)} />
+                  <button
+                    className="bg-red-500 text-white py-1 px-3 ml-2"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </td>
             </tr>
@@ -149,4 +152,3 @@ const YourComponent = () => {
 };
 
 export default YourComponent;
-

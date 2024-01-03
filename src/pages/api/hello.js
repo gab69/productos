@@ -2,18 +2,21 @@
 
 let products = [
   { 
+    id:'product_1704259123460',
     name: 'monitor',
     descripcion: '23 pulgadas',
     precio: '430.00',
     foto: 'https://http2.mlstatic.com/D_NQ_NP_2X_861997-MPE51061234221_082022-F.webp' 
   },
   { 
+    id:'product_1704259018960',
     name: 'teclado',
     descripcion: 'inalambrico',
     precio: '130.00',
     foto: 'https://ripleype.imgix.net/https%3A%2F%2Fdpq25p1ucac70.cloudfront.net%2Fseller-place-files%2Fmrkl-files%2F140%2FMARKETPLACE%20INTERNACIONAL%2F71Uwrto3PpL_194545167340_40.jpeg?w=750&h=555&ch=Width&auto=format&cs=strip&bg=FFFFFF&q=60&trimcolor=FFFFFF&trim=color&fit=fillmax&ixlib=js-1.1.0&s=7c5c9555ffa82dc41c009bccb53e0e8a' 
   },
   { 
+    id:'product_1704259054321',
     name: 'mouse',
     descripcion: 'inalambrico',
     precio: '100.00',
